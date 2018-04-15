@@ -1,0 +1,1 @@
+Nu tip sam znaesh kak 4e rabotaet))
