@@ -2,7 +2,7 @@
   "name": "nodementoring",
   "version": "1.0.0",
   "description": "enmp",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha",
     "start": "nodemon app.js"
