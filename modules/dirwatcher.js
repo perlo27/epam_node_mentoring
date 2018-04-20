@@ -6,8 +6,8 @@ const arraysAreEqual = (arr1 = [], arr2 = []) =>
   arr1.reduce((prev, el) => arr2.includes(el) && prev, true);
 
 export default class DirWatcher extends EventEmitter {
-  constructor(...args) {
-    super(...args);
+  constructor() {
+    super();
     this.watchTimer = null;
     this.dirContent = null;
   }

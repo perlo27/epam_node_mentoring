@@ -1,7 +1,7 @@
 import config from './conifg/conifg';
-import {User, Product, DirWatcher} from './modules';
+import { User, Product, DirWatcher, Importer } from './modules';
 
-console.log('config: ', config.name);
+console.log('config: ', config.csvfilesdir);
 
 const user = new User();
 const product = new Product();
@@ -10,6 +10,4 @@ const watcher = new DirWatcher();
 
 watcher.watch('./data', 1000);
 
-watcher.on('change', (e, files) => {
-  console.log('change', e, files);
-})
+const importer = new Importer(watcher);
