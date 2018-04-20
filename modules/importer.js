@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { promisify } from 'util';
+import csvjson from 'csvjson';
 import config from '../conifg/conifg';
 
 const readFile = promisify(fs.readFile);
@@ -51,9 +52,13 @@ export default class Importer {
     }
     try {
       const data = await readFile(path);
-      this.cache[simpleName] = data.toString();
-      console.log(`import from path: ${path} this data:\n`, data.toString());
-      return data.toString();
+      const [parsedData] = csvjson.toObject(data.toString(), {
+        delimiter: ',',
+        quote: '"',
+      });
+      this.cache[simpleName] = parsedData;
+      console.log(`import from path: ${path} this data:\n`, parsedData);
+      return parsedData;
     } catch (e) {
       console.log('Error while read file: ', e);
     }
@@ -70,9 +75,12 @@ export default class Importer {
     }
     try {
       const data = fs.readFileSync(path);
-      this.cache[simpleName] = data.toString();
-      console.log(`import from path: ${path} this data:\n`, data.toString());
-      return data.toString();
+      const [parsedData] = csvjson.toObject(data.toString(), {
+        delimiter: ',',
+        quote: '"',
+      });
+      console.log(`import from path: ${path} this data:\n`, parsedData);
+      return parsedData;
     } catch (e) {
       console.log('Error while read file: ', e);
     }
