@@ -1,10 +1,4 @@
-import config from './conifg/conifg';
-import { User, Product, DirWatcher, Importer } from './modules';
-
-console.log('config: ', config.csvfilesdir);
-
-const user = new User();
-const product = new Product();
+import { DirWatcher, Importer } from './modules';
 
 const watcher = new DirWatcher();
 
