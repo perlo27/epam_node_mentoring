@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "nodemon app.js --exec babel-node --presets env,stage-2"
+    "start": "babel-node app.js"
   },
   "author": "ap",
   "license": "ISC",
@@ -18,5 +18,8 @@
     "mocha": "^5.1.0",
     "nodemon": "^1.17.3",
     "prettier": "^1.12.0"
+  },
+  "dependencies": {
+    "csvjson": "^5.0.0"
   }
 }

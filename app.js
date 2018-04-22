@@ -1,7 +1,7 @@
-import config from './conifg/conifg';
-import {User, Product} from './modules';
+import { DirWatcher, Importer } from './modules';
 
-console.log('config: ', config.name);
+const watcher = new DirWatcher();
 
-const user = new User();
-const product = new Product();
+watcher.watch('./data', 1000);
+
+const importer = new Importer(watcher);
