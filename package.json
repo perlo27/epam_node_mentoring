@@ -20,6 +20,9 @@
     "prettier": "^1.12.0"
   },
   "dependencies": {
-    "csvjson": "^5.0.0"
+    "csvjson": "^5.0.0",
+    "minimist": "^1.2.0",
+    "request": "^2.85.0",
+    "through2": "^2.0.3"
   }
 }
