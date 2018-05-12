@@ -2,6 +2,7 @@ import fs from 'fs';
 import { promisify } from 'util';
 import csvjson from 'csvjson';
 import config from '../conifg/conifg';
+import {isCSV} from '../utils/helpers'
 
 const readFile = promisify(fs.readFile);
 
@@ -9,8 +10,6 @@ const constructPath = fileName => ({
   path: `./${config.csvfilesdir}/${fileName}`,
   fileName,
 });
-
-const isCSV = fileName => /\.csv$/.test(fileName);
 
 const getSimpleName = fileName => fileName.replace(/\.csv$/, '');
 

@@ -1,4 +1,5 @@
 {
   "name": "Node.js Homework Application",
-  "csvfilesdir": "data"
+  "csvfilesdir": "data",
+  "externalCsvAddress": "https://www.epam.com/etc/clientlibs/foundation/main.min.fc69c13add6eae57cd247a91c7e26a15.css"
 }
