@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "babel-node app.js"
+    "start": "babel-node koa-app"
   },
   "author": "ap",
   "license": "ISC",
@@ -22,6 +22,9 @@
   "dependencies": {
     "commander": "^2.15.1",
     "csvjson": "^5.0.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
     "query-string": "^6.1.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
