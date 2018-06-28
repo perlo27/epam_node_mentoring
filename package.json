@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "babel-node koa-app"
+    "start": "nodemon --exec babel-node koa-app"
   },
   "author": "ap",
   "license": "ISC",
@@ -22,9 +22,22 @@
   "dependencies": {
     "commander": "^2.15.1",
     "csvjson": "^5.0.0",
+    "install": "^0.11.1",
+    "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-convert": "^1.2.0",
+    "koa-cors": "0.0.16",
+    "koa-logger": "^3.2.0",
+    "koa-passport": "^4.1.0",
     "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "koa-static": "^5.0.0",
+    "npm": "^6.1.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth20": "^1.0.0",
+    "passport-local": "^1.0.0",
     "query-string": "^6.1.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",

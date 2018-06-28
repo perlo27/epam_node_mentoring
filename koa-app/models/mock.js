@@ -77,6 +77,12 @@ const users = [
     }
 ];
 
+const testUser = {
+  login: 'user1',
+  password: 'u1psw'
+};
+
+
 export default {
-    products, reviews, users
+    products, reviews, users, testUser
 }
