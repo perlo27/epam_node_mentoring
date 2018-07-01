@@ -7,7 +7,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(async function(id, done) {
   try {
-    const user = await fetchUser();
+    const user = await fetchUser('id', id);
     done(null, user);
   } catch (err) {
     done(err);

@@ -8,7 +8,6 @@ const convert = require('koa-convert');
 import router from './routes'
 import bodyparser from './middlewares/bodyparser';
 import errors from './middlewares/errors';
-import tockenVerifier from './middlewares/tockenVerifier';
 
 const app = new Koa();
 
@@ -24,7 +23,6 @@ app.use(errors);
 require('./lib/passport');
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(tockenVerifier);
 
 
 app.use(router);

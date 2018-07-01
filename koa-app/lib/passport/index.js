@@ -5,5 +5,6 @@ import './serialize';
 import './localStrategy';
 import './facebookStrategy';
 import './googleStrategy';
+import './JWTStratagy';
 
 module.exports = passport;

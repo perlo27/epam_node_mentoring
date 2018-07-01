@@ -11,8 +11,14 @@ const router = new Router({
   prefix: '/api',
 });
 
-router.get('/products', async ctx => {
-  ctx.body = products;
+router.get('/products', async (ctx, next) => {
+  await passport.authenticate('jwt',  { session: false }, async (err, user) => {
+    if(!user) {
+      ctx.throw(401);
+    }
+    ctx.body = products;
+  })(ctx, next);
+
 });
 
 router.post('/products', async ctx => {
@@ -42,11 +48,16 @@ router.get('/products/:id/reviews', async ctx => {
 });
 
 router.get('/users', async ctx => {
+  console.log('user---', ctx.state.user);
+  console.log('user', ctx.isAuthenticated());
+  if (!ctx.isAuthenticated()) {
+    ctx.throw(401);
+  }
   ctx.body = users;
 });
 
 router.post('/auth', async (ctx, next) => {
-  passport.authenticate('local', (err, user, info, status) => {
+  await passport.authenticate('local', async (err, user, info, status) => {
     if (user === false) {
       return ctx.throw(401);
     }
@@ -57,14 +68,23 @@ router.post('/auth', async (ctx, next) => {
       user: { username, email },
     };
 
+    await ctx.login(user);
     ctx.body = {
       code: 200,
       message: 'OK',
       data,
-      token,
+      token
     };
     ctx.status = 200;
   })(ctx, next);
+});
+
+router.get('/logout', async ctx => {
+  ctx.logout(ctx.state.user);
+  ctx.body = {
+    code: 200,
+    message: 'OK'
+  }
 });
 
 router.get('/auth/facebook', passport.authenticate('facebook'));
