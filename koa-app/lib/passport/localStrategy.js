@@ -9,7 +9,7 @@ passport.use(
       passwordField: 'password',
     },
     function(username, password, done) {
-      fetchUser()
+      fetchUser('username', username)
         .then(user => {
           if (username === user.username && password === user.password) {
             done(null, user);
