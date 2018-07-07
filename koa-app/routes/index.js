@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import mock from '../models/mock';
 import passport from 'koa-passport';
+
 import jwtClient from '../helpers/jwt';
 
 let products = [...mock.products];
