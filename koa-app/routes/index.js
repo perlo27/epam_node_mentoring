@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import mock from '../models/mock';
+import mock from '../db/models/mock';
 import passport from 'koa-passport';
 
 import jwtClient from '../helpers/jwt';

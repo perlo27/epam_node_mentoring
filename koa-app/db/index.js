@@ -1,14 +1,12 @@
 const Sequelize = require('sequelize');
 
+const host = process.env.mode === 'docker' ? 'db' : 'localhost';
+
 export default new Sequelize('postgres', 'postgres', null, {
-  host: 'db',
+  host,
   dialect: 'postgres',
-
-
   pool: {
     max: 5,
     min: 0
   }
 });
-// export default new Sequelize('postgres://nmp:nmp@postgres/nmpdb');
-//name nmp-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres

@@ -10,9 +10,13 @@ services:
     restart: always
     networks:
       - backend
+    environment:
+      mode: 'docker'
   postgres-nodeapp:
     image: postgres
     restart: always
+    ports:
+      - "5432:5432"
     volumes:
       - ~/Code/DB/nodementoring:/var/lib/postgresql/data
     networks:
