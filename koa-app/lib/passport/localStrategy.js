@@ -1,6 +1,6 @@
 const passport = require('koa-passport');
 const LocalStrategy = require('passport-local').Strategy;
-import {fetchUser} from './mock';
+import { db } from '../../db';
 
 passport.use(
   new LocalStrategy(
@@ -8,16 +8,16 @@ passport.use(
       usernameField: 'email',
       passwordField: 'password',
     },
-    function(username, password, done) {
-      fetchUser('username', username)
-        .then(user => {
-          if (username === user.username && password === user.password) {
-            done(null, user);
-          } else {
-            done(null, false);
-          }
-        })
-        .catch(err => done(err));
+    async function(username, password, done) {
+      try {
+        const user = await db.User.findOne({ where: { username } });
+        if (!user || password !== user.password) {
+          return done(null, false);
+        }
+        done(null, user);
+      } catch (err) {
+        done(err);
+      }
     }
   )
 );

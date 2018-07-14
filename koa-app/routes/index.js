@@ -2,36 +2,47 @@ import Router from 'koa-router';
 import mock from '../db/models/mock';
 import passport from 'koa-passport';
 
-import jwtClient from '../helpers/jwt';
+import { db } from '../db';
 
 let products = [...mock.products];
 let reviews = [...mock.reviews];
-let users = [...mock.users];
 
 const router = new Router({
   prefix: '/api',
 });
 
-router.get('/products', async (ctx, next) => {
-  await passport.authenticate('jwt',  { session: false }, async (err, user) => {
-    if(!user) {
+router.use(async (ctx, next) => {
+  // checking auth status
+  await passport.authenticate('jwt', { session: false }, async (err, user) => {
+    if (!user && !ctx.isAuthenticated()) {
       ctx.throw(401);
     }
-    ctx.body = products;
+    await next();
   })(ctx, next);
+});
 
+router.get('/products', async ctx => {
+  ctx.body = await db.Product.findAll({
+    attributes: ['id', 'name', 'brand', 'price'],
+  });
 });
 
 router.post('/products', async ctx => {
-  products.push(ctx.request.body);
-  ctx.body = ctx.request.body;
+  const { product, created } = await db.Product.findOrCreate({
+    where: { ...ctx.request.body },
+  }).spread((product, created) => ({ product, created }));
+
+  if (!created) {
+    ctx.throw(422, 'product already exists');
+  }
+  ctx.body = product.get({ plain: true });
 });
 
 router.get('/products/:id', async ctx => {
   if (!ctx.params.id) {
     ctx.throw(400, 'need some id');
   }
-  const requestedProduct = products.find(p => p.id === +ctx.params.id);
+  const requestedProduct = await db.Product.findById(ctx.params.id);
   if (!requestedProduct) {
     ctx.throw(404, 'product not found');
   }
@@ -49,50 +60,10 @@ router.get('/products/:id/reviews', async ctx => {
 });
 
 router.get('/users', async ctx => {
-  console.log('user---', ctx.state.user);
-  console.log('user', ctx.isAuthenticated());
-  if (!ctx.isAuthenticated()) {
-    ctx.throw(401);
-  }
-  ctx.body = users;
+  ctx.body = await db.User.findAll({
+    attributes: ['username', 'email', 'id'],
+  });
 });
 
-router.post('/auth', async (ctx, next) => {
-  await passport.authenticate('local', async (err, user, info, status) => {
-    if (user === false) {
-      return ctx.throw(401);
-    }
-
-    const token = jwtClient.sign(user);
-    const { username, email } = user;
-    const data = {
-      user: { username, email },
-    };
-
-    await ctx.login(user);
-    ctx.body = {
-      code: 200,
-      message: 'OK',
-      data,
-      token
-    };
-    ctx.status = 200;
-  })(ctx, next);
-});
-
-router.get('/logout', async ctx => {
-  ctx.logout(ctx.state.user);
-  ctx.body = {
-    code: 200,
-    message: 'OK'
-  }
-});
-
-router.get('/auth/facebook', passport.authenticate('facebook'));
-
-router.get('/auth/facebook/callback', async ctx => {
-  console.log(ctx);
-  ctx.redirect('/');
-});
 
 export default router.routes();

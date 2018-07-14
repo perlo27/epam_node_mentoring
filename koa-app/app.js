@@ -6,6 +6,8 @@ import cors from 'koa-cors';
 const convert = require('koa-convert');
 
 import router from './routes'
+import authRouter from './routes/authRoute';
+
 import bodyparser from './middlewares/bodyparser';
 import errors from './middlewares/errors';
 
@@ -36,6 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+app.use(authRouter);
 app.use(router);
 
 

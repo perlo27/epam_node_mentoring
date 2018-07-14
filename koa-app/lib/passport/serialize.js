@@ -1,5 +1,5 @@
 const passport = require('koa-passport');
-import {fetchUser} from './mock';
+import { db } from '../../db';
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -7,7 +7,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(async function(id, done) {
   try {
-    const user = await fetchUser('id', id);
+    const user = await db.User.findById(id);
     done(null, user);
   } catch (err) {
     done(err);
