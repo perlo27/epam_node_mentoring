@@ -6,8 +6,21 @@ import cors from 'koa-cors';
 const convert = require('koa-convert');
 
 import router from './routes'
+import authRouter from './routes/authRoute';
+
 import bodyparser from './middlewares/bodyparser';
 import errors from './middlewares/errors';
+
+import sequelize from './db';
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 const app = new Koa();
 
@@ -25,6 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+app.use(authRouter);
 app.use(router);
 
 

@@ -1,22 +1,24 @@
 const passport = require('koa-passport');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-import {fetchUser} from './mock';
 import { secret } from '../../helpers/jwt';
+import { db } from '../../db';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey : secret,
+  secretOrKey: secret,
 };
 
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-  fetchUser('id', jwt_payload.id)
-    .then(user => {
-      if (user) {
-        done(null, user);
-      } else {
-        done(null, false);
+passport.use(
+  new JwtStrategy(opts, async function({ id }, done) {
+    try {
+      const user = await db.User.findById(id);
+      if (!user) {
+        return done(null, false);
       }
-    })
-    .catch(err => done(err));
-}));
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  })
+);

@@ -1,0 +1,10 @@
+const path = require('path');
+
+const entry = process.env.mode === 'docker' ? '' : 'koa-app';
+
+module.exports = {
+  'config': path.resolve(entry, 'config', 'config.json'),
+  'models-path': path.resolve(entry, 'db', 'models'),
+  'seeders-path': path.resolve(entry, 'db', 'seeders'),
+  'migrations-path': path.resolve(entry, 'db', 'migrations')
+}

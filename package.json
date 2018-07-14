@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "nodemon --exec babel-node koa-app"
+    "seed-db": "sequelize db:seed:all",
+    "migrate-db": "sequelize db:migrate",
+    "start": "nodemon --exec babel-node koa-app",
+    "start-docker": "babel-node index.js"
   },
   "author": "ap",
   "license": "ISC",
@@ -33,15 +36,21 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.8.1",
     "koa-static": "^5.0.0",
+    "node-uuid": "^1.4.8",
     "npm": "^6.1.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
     "query-string": "^6.1.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
-    "through2": "^2.0.3"
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.0.0",
+    "through2": "^2.0.3",
+    "uuid": "^3.3.2"
   }
 }
