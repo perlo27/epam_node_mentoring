@@ -1,14 +1,12 @@
 const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-
-
-const host = process.env.mode === 'docker' ? 'db' : 'localhost';
+import config from '../config';
 
 export const db = {};
 
 const sequelize = new Sequelize('postgres', 'postgres', null, {
-  host,
+  host: config.postgresHost,
   dialect: 'postgres',
   pool: {
     max: 5,

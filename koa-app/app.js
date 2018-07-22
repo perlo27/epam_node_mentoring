@@ -12,6 +12,7 @@ import bodyparser from './middlewares/bodyparser';
 import errors from './middlewares/errors';
 
 import sequelize from './db';
+import './mongo'
 
 sequelize
   .authenticate()
