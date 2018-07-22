@@ -8,7 +8,8 @@
     "seed-db": "sequelize db:seed:all",
     "migrate-db": "sequelize db:migrate",
     "start": "nodemon --exec babel-node koa-app",
-    "start-docker": "babel-node index.js"
+    "start-docker": "babel-node index.js",
+    "seed-mongo": "babel-node koa-app/mongo/seed.js"
   },
   "author": "ap",
   "license": "ISC",
@@ -36,6 +37,7 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.8.1",
     "koa-static": "^5.0.0",
+    "mongoose": "^5.2.4",
     "node-uuid": "^1.4.8",
     "npm": "^6.1.0",
     "passport-facebook": "^2.1.1",

@@ -4,6 +4,8 @@ import passport from 'koa-passport';
 
 import { db } from '../db';
 
+import { CityModel } from '../mongo/schemas';
+
 let products = [...mock.products];
 let reviews = [...mock.reviews];
 
@@ -65,5 +67,17 @@ router.get('/users', async ctx => {
   });
 });
 
+router.get('/cities', async ctx => {
+  ctx.body = await CityModel.find();
+});
+
+router.post('/cities', async ctx => {
+  const { name, country, capital, location } = ctx.request.body;
+  try {
+    ctx.body = await CityModel.create({ name, country, capital, location });
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+});
 
 export default router.routes();
